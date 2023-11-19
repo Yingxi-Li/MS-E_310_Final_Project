@@ -1,0 +1,29 @@
+
+With k = 200, the one-time learning algorithm achieves 83.71% of the offline revenue.
+
+By comparison, the dynamic learning algorithm recovers 95.09% of the offline revenue.
+
+As k consecutively doubles, the L2 norm of the difference between the dual estimate and p_bar evolves as the following:
+[0.27401082 0.17939954 0.14036232 0.11022304 0.11839399 0.10870244
+ 0.10756956]
+Meanwhile, the L-infinity norm of the difference evolves as the following:
+[0.17566871 0.14467874 0.07659393 0.0517802  0.07853965 0.06085746
+ 0.0517409 ]
+
+It appears that initially p_hat (the dual price estimate) seems to converge to p_bar 
+(the ground truth vector), but it stops making progress after the first four updates. 
+Interesting, the L2 and L-infinity norms of the difference between p_hat_all and p_bar are 
+respectively 0.105025 and 0.048969, which are very close to that of the last terms of the two lists above.
+
+The above observation motivates us to probe the convergence of the dual estimate to p_hat_all, 
+the dual price calculated from solving the entire dual LP. As k consecutively doubles, the L2 norm 
+of the difference between the dual estimate and p_hat_all evolves as the following:
+[0.26716684 0.16050594 0.09067481 0.05564929 0.06695853 0.02789211
+ 0.01090958]
+Meanwhile, the L-infinity norm of the difference evolves as the following:
+[0.1450733  0.10194834 0.04409813 0.0370715  0.04358093 0.01812706
+ 0.0069799 ]
+
+The takeaway is that the dual estimate converges to the dual price calculated from solving 
+the entire dual LP, but this limit point is different from p_bar, the ground truth vector. This is 
+likely because our initialization of the bid vector pi involves adding Gaussian noise which introduces bias.
