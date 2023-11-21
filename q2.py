@@ -3,10 +3,11 @@ import numpy as np
 from math import floor, sqrt
 from numpy import random as rand
 from numpy.linalg import norm
-from q1 import m, b, n, get_offline_opt, get_dual_price, run_OLA, make_bids
+from q1 import m, b, n, get_offline_opt, dual_price_SLPM, run_OLA, make_bids
 
 # dynamic learning algorithm
-def run_dynamic_learn(A, B, Pie):
+# params are (w,a) for the utility function in SCPM
+def run_dynamic_learn(A, B, Pie, find_dual, u_kind = None, params = None):
     s0 = 50
     eps = s0 / n
     R = floor(np.log2(n / s0))
@@ -16,9 +17,13 @@ def run_dynamic_learn(A, B, Pie):
         l = s0 * (2**r)
         l_next = min(l * 2, n)
         h_l = eps * sqrt(n / l)
-        p_hat = get_dual_price(A, (1 - h_l) * (l/n) * B, Pie, l)
+        if u_kind is None:
+            p_hat = find_dual(A, (1 - h_l) * (l/n) * B, Pie, l) # SLPM, debiased
+        else: # SCPM
+            p_hat = find_dual(A, B, Pie, l, u_kind, params)
         dual_prices.append(p_hat)
-        # set a tentative allocation based on dual prices, not thinking if there are enough resources
+        # set a tentative allocation based on dual prices, not thinking if there are 
+        # enough resources
         x[l:l_next] = np.where(A[:,l:l_next].T@p_hat < Pie[l:l_next], 1, 0)
         for t in range(l, l_next): # 1-offset due to array indexing
             if not np.all(A[:,t] * x[t] <= B - A[:,:t]@x[:t]): # not enough resources left
@@ -32,9 +37,9 @@ if __name__ == '__main__':
     p_bar, a, pi = make_bids()
 
     offline_OPT = get_offline_opt(a, b, pi)
-    OLA_OPT, _ = run_OLA(a, b, pi, k = 200) # optimal value from one-time learning
+    OLA_OPT, _ = run_OLA(a, b, pi, 200, dual_price_SLPM) # optimal value from one-time learning
     dynamic_OPT, p_hat_list = run_dynamic_learn(a, b, pi)
-    p_hat_all = get_dual_price(a,b,pi,n) # dual price from solving the entire dual LP
+    p_hat_all = dual_price_SLPM(a,b,pi,n) # dual price from solving the entire dual LP
     # Calculate the KPIs of one-time & dynamic learning algorithms
     OLA_ratio = round((OLA_OPT / offline_OPT) * 100, 2)
     dynamic_ratio = round((dynamic_OPT / offline_OPT) * 100, 2)

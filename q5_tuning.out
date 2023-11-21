@@ -1,0 +1,10 @@
+Optimal offline revenue:  11182.0
+Optimal dynamic SLPM revenue:  10633.1
+
+Optimal dynamic learning revenue, SCPM + u1, with w = [0.1, 1, 5, 10, 50]:
+ [10669.5 10676.3 10786.9 10834.3 10657.6]
+
+Optimal dynamic learning revenue, SCPM + u2, with w = [1, 10], a = [0.1, 1, 10],
+w -> row index, a -> column index:
+ [[10659.1 10651.9 10669.1]
+ [10668.2 10756.2 10653.2]]

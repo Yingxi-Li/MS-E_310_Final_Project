@@ -20,18 +20,21 @@ def get_offline_opt(A, B, Pie):
 # k: number of bids in the partial LP
 # Function is tested: Gives the same dual price as solving the primal LP
 # using cvxpy and asking it to provide the dual value.
-def get_dual_price(A, B, Pie, k):
+# NOTE: The constraint B should be appropriately scaled by the caller beforehand
+def dual_price_SLPM(A, B, Pie, k):
     y = cp.Variable(k)
     p = cp.Variable(m)
-    prob = cp.Problem(cp.Minimize(B.T@p + sum(y)),
+    prob = cp.Problem(cp.Minimize(B.T@p + cp.sum(y)),
                       [A[:,:k].T@p + y >= Pie[:k], p >= 0, y >= 0])
     prob.solve()
     return p.value
 
 # One-time learning algorithm
-def run_OLA(A, B, Pie, k):
-    # epsilon = k / n # bias correction term: not used
-    p_hat = get_dual_price(A, k/n * B, Pie, k)
+def run_OLA(A, B, Pie, k, find_dual, u_kind = None):
+    if u_kind is None: # SLPM doesn't have u(s)
+        p_hat = find_dual(A, k/n * B, Pie, k)
+    else: # SCPM has two types of utility functions u(s)
+        p_hat = find_dual(A, B, Pie, k, u_kind)
     x = np.zeros(n)
     # Below: set a tentative allocation based on dual prices, not thinking if there are enough resources
     x[k:] = np.where(A[:,k:].T@p_hat < Pie[k:], 1, 0)
@@ -56,9 +59,7 @@ if __name__ == '__main__':
 
     # Compare offline vs online algorithms
     offline_OPT = get_offline_opt(a, b, pi)
-    profits_by_k = [run_OLA(a, b, pi, k)[0] for k in [50, 100, 200]]
-
-    # with open('q1.txt', 'w') as sys.stdout:
+    profits_by_k = [run_OLA(a, b, pi, k, dual_price_SLPM)[0] for k in [50, 100, 200]]
 
     print(f"## Q1 output. numpy random seed value={seed_val} ##")
     print(f"\nThe offline optimal revenue is ${offline_OPT}.")

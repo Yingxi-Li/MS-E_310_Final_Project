@@ -1,0 +1,4 @@
+Competitive ratios of three dynamic learning algorithms (in percent of offline revenue):
+Dynamic SLPM:  95.09
+Dynamic SCPM, u(s) is sum of log's:  95.48
+Dynamic SCPM, u(s) is sum of negative exponetials:  95.26
