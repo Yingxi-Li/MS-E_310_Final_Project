@@ -4,10 +4,11 @@ from math import floor, sqrt
 from numpy import random as rand
 from numpy.linalg import norm
 from q1 import m, b, n, get_offline_opt, dual_price_SLPM, run_OLA, make_bids
+from utils.grapher import one_line_ci, multiple_lines_ci
 
 # dynamic learning algorithm
 # params are (w,a) for the utility function in SCPM
-def run_dynamic_learn(A, B, Pie, find_dual, u_kind = None, params = None):
+def run_dynamic_learn(A, B, Pie, find_dual, u_kind = None, params = None, return_x = False):
     s0 = 50
     eps = s0 / n
     R = floor(np.log2(n / s0))
@@ -29,7 +30,13 @@ def run_dynamic_learn(A, B, Pie, find_dual, u_kind = None, params = None):
             if not np.all(A[:,t] * x[t] <= B - A[:,:t]@x[:t]): # not enough resources left
                 x[t] = 0
     profit = Pie.T@x
+#     print(x[:100])
+    
+    if return_x:
+          return profit, dual_prices, x
     return profit, dual_prices
+
+
 
 if __name__ == '__main__':
 
@@ -73,4 +80,7 @@ if __name__ == '__main__':
     print("\nThe takeaway is that the dual estimate converges to the dual price calculated from solving "
           "\nthe entire dual LP, but this limit point is different from p_bar, the ground truth vector. This is "
           "\nlikely because our initialization of the bid vector pi involves adding Gaussian noise which introduces bias.")
+    
+    one_line_ci([200], [OLA_ratio], [0], "k", "Optimality Ratio", "Optimality Ratio vs. Size of k of SLPM ", "q1.pdf", do_save = True, baseline=None, xticks=[200])
+    
     pass

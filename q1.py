@@ -4,7 +4,7 @@ from numpy import random as rand
 
 # Constants
 m = 10 # number of goods types: 10
-b = 1000 * np.ones(m) # vector of initial inventory level
+b = 1000 * np.ones(m) # vector of initial inventory level: 1000
 n = 10000 # total number of bidders: 10000
 seed_val = 5
 
@@ -21,12 +21,14 @@ def get_offline_opt(A, B, Pie):
 # Function is tested: Gives the same dual price as solving the primal LP
 # using cvxpy and asking it to provide the dual value.
 # NOTE: The constraint B should be appropriately scaled by the caller beforehand
-def dual_price_SLPM(A, B, Pie, k):
+def dual_price_SLPM(A, B, Pie, k, return_y = False):
     y = cp.Variable(k)
     p = cp.Variable(m)
     prob = cp.Problem(cp.Minimize(B.T@p + cp.sum(y)),
                       [A[:,:k].T@p + y >= Pie[:k], p >= 0, y >= 0])
     prob.solve()
+    if return_y:
+        return p.value, y.value
     return p.value
 
 # One-time learning algorithm
