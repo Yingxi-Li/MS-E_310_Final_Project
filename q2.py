@@ -81,6 +81,6 @@ if __name__ == '__main__':
           "\nthe entire dual LP, but this limit point is different from p_bar, the ground truth vector. This is "
           "\nlikely because our initialization of the bid vector pi involves adding Gaussian noise which introduces bias.")
     
-    one_line_ci([200], [OLA_ratio], [0], "k", "Optimality Ratio", "Optimality Ratio vs. Size of k of SLPM ", "q1.pdf", do_save = True, baseline=None, xticks=[200])
+    multiple_lines_ci([200], [norm(p_hat_all - p_bar), norm(p_hat_all - p_bar, np.inf)], [np.zeros()], "k", "Optimality Ratio", "Optimality Ratio vs. Size of k of SLPM ", "q1.pdf", do_save = True, baseline=None, xticks=[200])
     
     pass

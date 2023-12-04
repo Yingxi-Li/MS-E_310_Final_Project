@@ -4,8 +4,8 @@ from numpy import random as rand
 
 # Constants
 m = 10 # number of goods types: 10
-b = 1000 * np.ones(m) # vector of initial inventory level: 1000
-n = 10000 # total number of bidders: 10000
+b = 100 * np.ones(m) # vector of initial inventory level: 1000
+n = 1000 # total number of bidders: 10000
 seed_val = 5
 
 ## Calculate optimal offline revenue

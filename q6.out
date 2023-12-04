@@ -1,8 +1,9 @@
-11182.038732644454 11169.392666476644 10633.103329275984
 ## Q6 outputs see figures folder. numpy random seed value=5 ##
 
  Observe from the figure that action-history-dependent learning algorithm outperforms the dynamic learning, 
-  algorithm in terms of the optimality gap as it gears the dual price towards the optimal dual price 
- at every step it takes. However, note that the dynamic learning algorithm is more computationally more efficient
+ algorithm in terms of the optimality gap as it gears the dual price towards the optimal dual price 
+ at every step it takes. 
+ 
+ However, note that the dynamic learning algorithm is more computationally more efficient
  as n grows large, as it only needs to solve a dual LP for log(n) times whereas the action-history-dependent 
  learning algorithm needs to solve a dual LP for n times.
