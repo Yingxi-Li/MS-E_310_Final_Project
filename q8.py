@@ -115,7 +115,7 @@ if __name__ == '__main__':
     profit, opt_gap, offline_OPT, p_hat_list = simple_fast(a, b, pi, step_size='sqrt')
     
     p_true = dual_price_SLPM(a, b, pi, n)
-    p_gap = [np.linalg.norm(p_hat - p_true) for p_hat in p_hat_list]
+    p_gap = [np.linalg.norm(p_hat - p_true)/np.linalg.norm(p_true) for p_hat in p_hat_list]
     
     print(f"## Q8 outputs: ##")
     
@@ -134,24 +134,33 @@ if __name__ == '__main__':
     
     mean_opt_gaps = np.mean(opt_gaps, axis=0)
     
-    print(f"\n The SGD-based learning algorithm with SGD approximation of dual price "
+    print(f"\n The simple and fast SGD-based learning algorithm with SGD approximation of dual price "
           f"\n achieves {100 + round(mean_opt_gaps[-1]*100, 2)}% of the offline revenue")
     
     one_line_ci(x=np.arange(1, n+1, 1), 
                 y=mean_opt_gaps, 
                 ci=opt_gap_ci, 
                 x_name="Iteration", y_name="Optimality Gap of Profit", 
-                title="Convergence of Profit to Offline Optimal Profit with Adaptive Approx", 
+                title="Convergence of Profit to Offline Optimal Profit with Adaptive Step Size", 
                 fig_name="q8_profit_convergence_simple.pdf", do_save=True)
     one_line_ci(x=np.arange(1, n+1, 1), 
                 y=np.mean(p_gaps, axis=0), 
                 ci=p_gap_ci, 
-                x_name="Iteration", y_name="Distance between Approximated and True Dual Prices", 
-                title="Convergence of Approximated Dual Prices to True Dual Prices with Adaptive Approx", 
+                x_name="Iteration", y_name="Normalized Difference between Approximated and True Dual Prices", 
+                title="Convergence of Approximated Dual Prices to True Dual Prices with Adaptive Step Size", 
                 fig_name="q8_dual_price_convergence_simple.pdf", do_save=True)
     
     
     print(f"\n Convergence of the dual price vector to the true dual price vector see fugures.")
+    
+    print(f"\n Note that this algorithm, despite achieving lower profit, doesn't require the solving of"
+            f"\n LPs. Thus, its runtime does not explode as the dimension of the LP increase.")
+    
+    print(f"\n The approximated dual price vector converges to the true price to some degree "
+        f"\n but not as well as when we use constant step size for update. The weighted updating step-size"
+        f"\n seems get more aggressive towards the end and causes the dual price to oscillate more.")
+    
+    
     
     pass
     

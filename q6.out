@@ -4,6 +4,6 @@
  algorithm in terms of the optimality gap as it gears the dual price towards the optimal dual price 
  at every step it takes. 
  
- However, note that the dynamic learning algorithm is more computationally more efficient
+ However, note that the dynamic learning algorithm is computationally more efficient
  as n grows large, as it only needs to solve a dual LP for log(n) times whereas the action-history-dependent 
  learning algorithm needs to solve a dual LP for n times.
