@@ -154,11 +154,13 @@ if __name__ == '__main__':
     print(f"\n Convergence of the dual price vector to the true dual price vector see fugures.")
     
     print(f"\n Note that this algorithm, despite achieving lower profit, doesn't require the solving of"
-            f"\n LPs. Thus, its runtime does not explode as the dimension of the LP increase.")
+        f"\n LPs. Thus, its runtime does not explode as the dimension of the LP increase. Observing the profit" 
+        " \n convergence, we see that this algorithm tends to drain the resources faster towards the beginning, " 
+        " \n causing the peak and the subsequent drop in the profit.")
     
-    print(f"\n The approximated dual price vector converges to the true price to some degree "
-        f"\n but not as well as when we use constant step size for update. The weighted updating step-size"
-        f"\n seems get more aggressive towards the end and causes the dual price to oscillate more.")
+    print(f"\n The approximated dual price vector exhibites desirable convergence to the true price. The " 
+          " \n more aggressive weighted updating step-size causes the dual price to oscillate more " 
+          " \n as the number of iteration increases.")
     
     
     

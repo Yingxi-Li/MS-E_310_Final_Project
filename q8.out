@@ -1,11 +1,4 @@
- The simple and fast SGD-based learning algorithm with SGD approximation of dual price 
- achieves 83.93% of the offline revenue
-
- Convergence of the dual price vector to the true dual price vector see fugures.
-
- Note that this algorithm, despite achieving lower profit, doesn't require the solving of
- LPs. Thus, its runtime does not explode as the dimension of the LP increase.
-
- The approximated dual price vector converges to the true price to some degree 
- but not as well as when we use constant step size for update. The weighted updating step-size
- seems get more aggressive towards the end and causes the dual price to oscillate more.
+/Users/yingxi/opt/anaconda3/envs/udell/lib/python3.9/site-packages/numpy/lib/function_base.py:518: RuntimeWarning: Mean of empty slice.
+  avg = a.mean(axis, **keepdims_kw)
+/Users/yingxi/opt/anaconda3/envs/udell/lib/python3.9/site-packages/numpy/core/_methods.py:182: RuntimeWarning: invalid value encountered in divide
+  ret = um.true_divide(
