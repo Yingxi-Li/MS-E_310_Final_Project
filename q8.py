@@ -137,18 +137,18 @@ if __name__ == '__main__':
     print(f"\n The simple and fast SGD-based learning algorithm with SGD approximation of dual price "
           f"\n achieves {100 + round(mean_opt_gaps[-1]*100, 2)}% of the offline revenue")
     
-    one_line_ci(x=np.arange(1, n+1, 1), 
-                y=mean_opt_gaps, 
-                ci=opt_gap_ci, 
-                x_name="Iteration", y_name="Optimality Gap of Profit", 
-                title="Convergence of Profit to Offline Optimal Profit with Adaptive Step Size", 
-                fig_name="q8_profit_convergence_simple.pdf", do_save=True)
+    # one_line_ci(x=np.arange(1, n+1, 1), 
+    #             y=mean_opt_gaps, 
+    #             ci=opt_gap_ci, 
+    #             x_name="Iteration", y_name="Optimality Gap of Profit", 
+    #             title="Convergence of Profit to Offline Optimal Profit with Adaptive Step Size", 
+    #             fig_name="q8_profit_convergence_simple.pdf", do_save=True)
     one_line_ci(x=np.arange(1, n+1, 1), 
                 y=np.mean(p_gaps, axis=0), 
                 ci=p_gap_ci, 
                 x_name="Iteration", y_name="Normalized Difference between Approximated and True Dual Prices", 
                 title="Convergence of Approximated Dual Prices to True Dual Prices with Adaptive Step Size", 
-                fig_name="q8_dual_price_convergence_simple.pdf", do_save=True)
+                fig_name="q8_dual_price_convergence_simple1.pdf", do_save=True)
     
     
     print(f"\n Convergence of the dual price vector to the true dual price vector see fugures.")
