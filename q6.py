@@ -65,9 +65,9 @@ if __name__ == '__main__':
     multiple_lines_ci(x = np.arange(1, n, 1), 
                         y = [opt_gap[1:], opt_gap2[1:]], 
                         ci = [np.zeros(len(opt_gap2) - 1), np.zeros(len(opt_gap2) - 1)], 
-                        labels = ["Action-history-dependent Learning Algorithm", "Dynamic Learniong Algorithm"], 
+                        labels = ["Action-history-dependent Learning Algorithm", "Dynamic Learning Algorithm"], 
                         x_name = "Number of Iteration", 
-                        y_name = "Optimality Gap", 
+                        y_name = "Competitiveness Ratio with Offline Optimal Profit", 
                         title = "Q6: Comparison of Algorithms", 
                         fig_name = "q6.pdf", do_save = True, baseline=[0.0000000000001])
     
